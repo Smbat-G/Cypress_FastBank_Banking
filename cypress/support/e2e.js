@@ -14,4 +14,17 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+// import './commands'
+
 import './commands'
+
+Cypress.on('window:before:load', (win) => {
+  try {
+    Object.defineProperty(win.navigator, 'webdriver', {
+      get: () => undefined,
+      configurable: true
+    })
+  } catch (e) {
+    // already defined, ignore
+  }
+})
