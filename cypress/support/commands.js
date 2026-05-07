@@ -5,7 +5,7 @@ Cypress.Commands.add('login', (username, password) => {
       cy.visit('https://fcbanking-test.org.fcc.am/auth/login')
       return
     }
-
+  
     cy.request({
       method: 'GET',
       url: 'https://fcbankonlinebankingapi-test.fcc.am/ApplicationUser/GetOTPByType',
