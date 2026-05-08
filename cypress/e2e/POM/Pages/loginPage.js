@@ -5,15 +5,31 @@ class LoginPage {
   loginButton = () => cy.get('[type="submit"]')
   errorMessage = () => cy.get('[ng-reflect-ng-switch="ERROR"]')
 
-  // assertions
+  // actions
+  typeUsername(username) {
+    this.usernameInput().type(username)
+  }
+
+  typePassword(password) {
+    this.passwordInput().type(password)
+  }
+
+  clickLogin() {
+    this.loginButton().click()
+  }
+
+  assertions
   verifyLoginSuccess() {
     cy.url().should('not.include', 'auth/login')
   }
 
-verifyLoginFailed() {
-  cy.url().should('include', 'auth/login')
-  this.errorMessage().should('be.visible')
-}
+  verifyLoginFailed() {
+    cy.url().should('include', 'auth/login')
+  }
+
+  verifyLoginButtonDisabled() {
+    this.loginButton().should('be.visible').and('be.disabled')
+  }
 }
 
 export default new LoginPage()

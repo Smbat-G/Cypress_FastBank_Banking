@@ -3,7 +3,7 @@ import loginPage from '../pages/loginPage'
 describe('Login Page Tests', () => {
 
   beforeEach(() => {
-    cy.visit('https://fcbanking-test.org.fcc.am/auth/login')
+    cy.visit('/auth/login')
   })
 
   it('should login with valid credentials', () => {
@@ -13,31 +13,31 @@ describe('Login Page Tests', () => {
 
   it('should not login with invalid username', () => {
     cy.login('wronguser', Cypress.env('password'))
-    cy.visit('https://fcbanking-test.org.fcc.am/auth/login')
-    cy.url().should('include', 'auth/login')
+    cy.visit('/auth/login')
+    loginPage.verifyLoginFailed()
   })
 
   it('should not login with invalid password', () => {
     cy.login(Cypress.env('username'), 'wrongpass')
-    cy.visit('https://fcbanking-test.org.fcc.am/auth/login')
-    cy.url().should('include', 'auth/login')
+    cy.visit('/auth/login')
+    loginPage.verifyLoginFailed()
   })
 
   it('should not login with empty username', () => {
-    cy.get('[id="password"]').type(Cypress.env('password'))
-    cy.get('[type="submit"]').should('be.disabled')
-    cy.url().should('include', 'auth/login')
+    loginPage.typePassword(Cypress.env('password'))
+    loginPage.verifyLoginButtonDisabled()
+    loginPage.verifyLoginFailed()
   })
 
   it('should not login with empty password', () => {
-    cy.get('[id="username"]').type(Cypress.env('username'))
-    cy.get('[type="submit"]').should('be.disabled')
-    cy.url().should('include', 'auth/login')
+    loginPage.typeUsername(Cypress.env('username'))
+    loginPage.verifyLoginButtonDisabled()
+    loginPage.verifyLoginFailed()
   })
 
   it('should not login with empty credentials', () => {
-    cy.get('[type="submit"]').should('be.disabled')
-    cy.url().should('include', 'auth/login')
+    loginPage.verifyLoginButtonDisabled()
+    loginPage.verifyLoginFailed()
   })
 
 })
