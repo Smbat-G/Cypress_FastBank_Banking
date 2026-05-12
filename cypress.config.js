@@ -6,6 +6,8 @@ module.exports = defineConfig({
     chromeWebSecurity: false,
     viewportWidth: 1920,
     viewportHeight: 1080,
+
+    supportFile: 'cypress/support/e2e.js',
     setupNodeEvents(on, config) {
       on('before:browser:launch', (browser, launchOptions) => {
         if (browser.family === 'chromium') {
